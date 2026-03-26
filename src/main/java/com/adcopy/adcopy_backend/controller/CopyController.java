@@ -29,13 +29,14 @@ public class CopyController {
             List<String> texts = aiService.generateCopy(
                     req.getCount(),
                     req.getTone(),
+                    req.getLanguage(),
                     req.getPlatName(),
                     req.getScene(),
                     req.getExtraFields()
             );
 
             // 敏感词检测
-            List<List<String>> detections = sensitiveWordService.detect(texts);
+            List<List<String>> detections = sensitiveWordService.detect(texts, req.getPlatName());
 
             List<Map<String, Object>> items = new ArrayList<>();
             int totalSensitive = 0;

@@ -8,11 +8,14 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Service
 public class AiService {
+    private static final Logger log = LoggerFactory.getLogger(AiService.class);
 
     @Value("${openai.api-key}")
     private String apiKey;
@@ -23,36 +26,28 @@ public class AiService {
     @Value("${openai.model}")
     private String model;
 
-    @Value("${openai.timeout}")
-    private int timeout;
-
+    private final OkHttpClient client;
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final PromptBuilder promptBuilder;
 
-    public AiService(PromptBuilder promptBuilder) {
+    public AiService(OkHttpClient client, PromptBuilder promptBuilder) {
+        this.client = client;
         this.promptBuilder = promptBuilder;
     }
 
-    public List<String> generateCopy(int count, String tone,
+    public List<String> generateCopy(int count, String tone,String language,
                                      String platName, String scene,
                                      Map<String, String> extraFields) throws Exception {
 
-        OkHttpClient client = new OkHttpClient.Builder()
-                .connectTimeout(timeout, TimeUnit.SECONDS)
-                .readTimeout(timeout, TimeUnit.SECONDS)
-                .build();
+        String prompt = promptBuilder.build(platName, scene, count, tone, language, extraFields);
 
-        String prompt = promptBuilder.build(platName, scene, count, tone, extraFields);
+        log.debug("=== [AiService] 文案生成 Prompt ===\n{}", prompt);
 
-        String requestBody = objectMapper.writeValueAsString(new java.util.HashMap<String, Object>() {{
-            put("model", model);
-            put("messages", List.of(
-                    new java.util.HashMap<String, String>() {{
-                        put("role", "user");
-                        put("content", prompt);
-                    }}
-            ));
-        }});
+        Map<String, Object> body = Map.of(
+                "model", model,
+                "messages", List.of(Map.of("role", "user", "content", prompt))
+        );
+        String requestBody = objectMapper.writeValueAsString(body);
 
         Request request = new Request.Builder()
                 .url(baseUrl + "/v1/chat/completions")
@@ -69,7 +64,7 @@ public class AiService {
             JsonNode root = objectMapper.readTree(responseBody);
             String content = root.path("choices").get(0).path("message").path("content").asText();
             content = content.replace("\\n", "\n");
-            // 按独立一行的 --- 分割，精确匹配避免误切段落内容
+
             List<String> result = new ArrayList<>();
             for (String block : content.split("(?m)^\\s*---\\s*$")) {
                 String trimmed = block.trim();
@@ -77,7 +72,6 @@ public class AiService {
                     result.add(trimmed);
                 }
             }
-            // 截断到请求数量，防止模型多输出
             if (result.size() > count) {
                 result = result.subList(0, count);
             }

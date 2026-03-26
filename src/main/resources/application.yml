@@ -10,3 +10,7 @@ openai:
 spring:
   application:
     name: adcopy-backend
+
+logging:
+  level:
+    com.adcopy: DEBUG
