@@ -1,0 +1,942 @@
+platforms:
+  - id: amazon
+    name: Amazon
+    scenes:
+
+      - name: 产品标题
+        riskLevel: high
+        template: |
+          你是一位资深跨境广告文案专家，平台：{platName}。
+          任务：为以下商品生成适合 {platName} 平台的产品标题，需包含核心关键词，控制在200字符以内。
+          产品品类：{category}
+          核心关键词：{keywords}
+          原始文案：{originalCopy}
+        fields:
+          - key: originalCopy
+            label: 原始文案
+            type: textarea
+            rows: 4
+            placeholder: 输入你现有的产品标题或产品基础信息，留空则从零生成...
+            required: false
+          - key: keywords
+            label: 核心关键词
+            type: input
+            placeholder: "例：wireless earbuds, noise cancelling"
+          - key: category
+            label: 产品品类
+            type: input
+            placeholder: "例：蓝牙耳机"
+
+      - name: "5点描述 Bullet Points"
+        riskLevel: medium
+        format: bullets
+        countLabel: 生成套数
+        countHint: 每套包含完整 5 个 Bullet Points，此处控制生成套数
+        template: |
+          你是一位深耕亚马逊8年的资深运营，专门研究高转化 listing，深知买家扫描 Bullet Points 时只有3秒决策窗口。
+          你的核心信条：买家买的不是「功能」，是「功能带来的生活改变」。
+
+          在写每条之前，先在脑中完成以下判断（不需要输出）：
+          - 这条卖点能让买家的生活发生什么具体改变?
+          - 买家在什么场景下会真切感受到这个改变?
+          - 竞品会怎么写这条?我怎么写得比它更具体?
+          然后再输出文案
+
+          【格式规则】
+          - 每条以全大写短语开头（2-4个词），紧跟破折号「—」，再展开具体利益
+          - 每条开头的全大写短语必须用 **双星号** 包裹，例：**SILENT COMMUTE BLISS** — ...
+          - 每条150-200字符，自然嵌入关键词
+          - 5条必须覆盖5个不同角度，顺序固定：
+            第1条：核心使用场景下的情感收益
+            第2条：差异化技术/功能背书（要有具体数字）
+            第3条：防顾虑/打消购买疑虑
+            第4条：适用人群/生活方式认同
+            第5条：售后保障/零风险承诺
+
+          【禁止清单】
+          - 禁止以功能名称开头（❌ ACTIVE NOISE CANCELLATION TECHNOLOGY...）
+          - 禁止「ensures/provides/features/allows」等无力动词
+          - 禁止空洞形容词（crystal-clear / premium / superior / ultimate）
+          - 禁止每套用相同开头词或相同句式结构
+          - 禁止以「Our」「We」「This product」开头
+          - 禁止在每套开头添加「Variant X」或任何序号标识
+          
+          【Few-shot 示例】
+          ❌ 错误写法（功能导向，无力）：
+          ACTIVE NOISE CANCELLATION TECHNOLOGY blocks external distractions for immersive sound experience during commute or workout.
+
+          ✅ 正确写法（结果导向，有场景，有情感）：
+          TUNE OUT THE WORLD IN 0.3 SECONDS — Hybrid ANC cuts 35dB of ambient noise so your morning commute feels like a private concert, not a crowded subway.
+
+          ❌ 错误写法（平淡，无具体数字）：
+          FAST CHARGE FEATURE enables 2 hours of playback with just 10 minutes of charging, saving valuable time.
+
+          ✅ 正确写法（场景具体，数字有冲击力）：
+          FORGOT TO CHARGE LAST NIGHT? — 10 minutes in the case = 2 hours of playback. Enough for your entire commute, every time.
+
+          核心卖点：{sellingPoints}
+          目标受众：{targetAudience}
+          原始文案：{originalCopy}
+        fields:
+          - key: originalCopy
+            label: 原始文案
+            type: textarea
+            rows: 4
+            placeholder: 输入现有 Bullet Points 或产品基础信息，留空则从零生成...
+            required: false
+          - key: sellingPoints
+            label: 核心卖点
+            type: input
+            placeholder: "例：防水、续航30小时、主动降噪"
+          - key: targetAudience
+            label: 目标受众
+            type: input
+            placeholder: "例：运动人群、通勤上班族"
+
+      - name: 产品描述（段落式）
+        riskLevel: medium
+        template: |
+          你是一位资深跨境广告文案专家，平台：{platName}。
+          任务：生成一段完整的产品描述，讲述使用场景和情感价值，200-300词。
+          目标受众：{targetAudience}
+          使用场景：{useScene}
+          品牌调性：{brandTone}
+          原始文案：{originalCopy}
+        fields:
+          - key: originalCopy
+            label: 原始文案
+            type: textarea
+            rows: 4
+            placeholder: 输入现有产品描述或产品基础信息，留空则从零生成...
+            required: false
+          - key: targetAudience
+            label: 目标受众
+            type: input
+            placeholder: "例：25-40岁通勤上班族"
+          - key: useScene
+            label: 使用场景
+            type: input
+            placeholder: "例：户外运动、居家办公"
+          - key: brandTone
+            label: 品牌调性
+            type: input
+            placeholder: "例：科技感、温暖亲切"
+
+      - name: "A+ 内容标题"
+        riskLevel: low
+        template: |
+          你是一位资深跨境广告文案专家，平台：{platName}。
+          任务：生成适合 Amazon A+ 页面的模块标题，简洁有力，突出内容主题。
+          内容主题方向：{contentTheme}
+          原始文案：{originalCopy}
+        fields:
+          - key: originalCopy
+            label: 原始文案
+            type: textarea
+            rows: 4
+            placeholder: 输入现有 A+ 标题或产品基础信息，留空则从零生成...
+            required: false
+          - key: contentTheme
+            label: 内容主题方向
+            type: input
+            placeholder: "例：品牌故事、功能对比、生活方式"
+
+      - name: "A+ 模块文案"
+        riskLevel: low
+        template: |
+          你是一位资深跨境广告文案专家，平台：{platName}。
+          任务：生成 Amazon A+ 模块配套文案，与图片场景呼应，突出卖点。
+          模块类型：{moduleType}
+          主打卖点：{sellingPoints}
+          原始文案：{originalCopy}
+        fields:
+          - key: originalCopy
+            label: 原始文案
+            type: textarea
+            rows: 4
+            placeholder: 输入现有模块文案或产品基础信息，留空则从零生成...
+            required: false
+          - key: moduleType
+            label: 模块类型
+            type: input
+            placeholder: "例：对比图、功能介绍、场景图"
+          - key: sellingPoints
+            label: 主打卖点
+            type: input
+            placeholder: "例：轻薄、长续航"
+
+      - name: "Search Terms 关键词"
+        riskLevel: medium
+        template: |
+          你是一位资深跨境广告文案专家，平台：{platName}。
+          任务：生成 Search Terms 关键词字符串，不重复，不超过249字符，词之间用空格分隔。
+          相关词/竞品词：{keywords}
+          产品用途：{useScene}
+          原始文案：{originalCopy}
+        fields:
+          - key: originalCopy
+            label: 原始文案
+            type: textarea
+            rows: 4
+            placeholder: 输入产品基础信息或现有关键词，留空则从零生成...
+            required: false
+          - key: keywords
+            label: 相关词 / 竞品词
+            type: input
+            placeholder: "例：bluetooth headphone sport gym"
+          - key: useScene
+            label: 产品用途
+            type: input
+            placeholder: "例：跑步、健身、通勤"
+
+      - name: "Sponsored 广告标题"
+        riskLevel: high
+        template: |
+          你是一位资深跨境广告文案专家，平台：{platName}。
+          任务：生成 Sponsored 广告标题，吸引点击，控制在150字符以内。
+          推广重点：{promoFocus}
+          核心关键词：{keywords}
+          原始文案：{originalCopy}
+        fields:
+          - key: originalCopy
+            label: 原始文案
+            type: textarea
+            rows: 4
+            placeholder: 输入现有广告标题或产品基础信息，留空则从零生成...
+            required: false
+          - key: promoFocus
+            label: 推广重点
+            type: input
+            placeholder: "例：限时折扣、新品首发、功能卖点"
+          - key: keywords
+            label: 核心关键词
+            type: input
+            placeholder: "例：wireless earbuds"
+
+      - name: 品牌推广文案
+        riskLevel: medium
+        template: |
+          你是一位资深跨境广告文案专家，平台：{platName}。
+          任务：生成品牌推广文案，传递品牌价值观，建立用户信任感。
+          品牌理念：{brandConcept}
+          差异化优势：{advantage}
+          原始文案：{originalCopy}
+        fields:
+          - key: originalCopy
+            label: 原始文案
+            type: textarea
+            rows: 4
+            placeholder: 输入现有品牌文案或产品基础信息，留空则从零生成...
+            required: false
+          - key: brandConcept
+            label: 品牌理念
+            type: input
+            placeholder: "例：专注高品质音频20年"
+          - key: advantage
+            label: 差异化优势
+            type: input
+            placeholder: "例：独家专利降噪技术"
+
+      - name: 买家评论回复
+        riskLevel: low
+        template: |
+          你是一位资深跨境广告文案专家，平台：{platName}。
+          任务：针对以下买家评论生成专业、友好的回复，体现品牌温度。
+          评论类型：{reviewType}
+          买家评论原文：{reviewContent}
+        fields:
+          - key: reviewContent
+            label: 买家评论原文
+            type: textarea
+            rows: 4
+            placeholder: 粘贴需要回复的买家评论...
+            required: true
+          - key: reviewType
+            label: 评论类型
+            type: radio
+            options:
+              - 好评
+              - 中评
+              - 差评
+
+      - name: "Q&A 问答"
+        riskLevel: low
+        template: |
+          你是一位资深跨境广告文案专家，平台：{platName}。
+          任务：基于以下买家问题生成专业准确的产品问答回复，简洁易懂。
+          买家问题：{question}
+        fields:
+          - key: question
+            label: 买家问题原文
+            type: textarea
+            rows: 3
+            placeholder: "例：Is this compatible with iPhone?"
+            required: true
+
+      - name: Deal/促销说明
+        riskLevel: high
+        template: |
+          你是一位资深跨境广告文案专家，平台：{platName}。
+          任务：生成促销活动文案，突出优惠力度和紧迫感，引导下单。
+          折扣力度：{dealInfo}
+          活动时限：{dealDeadline}
+          适用商品范围：{dealScope}
+          原始文案：{originalCopy}
+        fields:
+          - key: originalCopy
+            label: 原始文案
+            type: textarea
+            rows: 4
+            placeholder: 输入现有促销文案或产品基础信息，留空则从零生成...
+            required: false
+          - key: dealInfo
+            label: 折扣力度
+            type: input
+            placeholder: "例：买二送一、立减$10"
+          - key: dealDeadline
+            label: 活动时限
+            type: input
+            placeholder: "例：限时48小时"
+          - key: dealScope
+            label: 适用商品范围
+            type: input
+            placeholder: "例：全场耳机系列"
+
+  - id: tiktok
+    name: TikTok Shop
+    scenes:
+
+      - name: 视频脚本
+        riskLevel: medium
+        template: |
+          你是一位资深跨境广告文案专家，平台：{platName}。
+          任务：生成适合 TikTok 短视频的脚本文案，节奏感强，前3秒抓住注意力。
+          视频主题：{videoTheme}
+          目标受众：{targetAudience}
+          原始文案：{originalCopy}
+        fields:
+          - key: originalCopy
+            label: 原始文案
+            type: textarea
+            rows: 4
+            placeholder: 输入现有脚本或产品基础信息，留空则从零生成...
+            required: false
+          - key: videoTheme
+            label: 视频主题
+            type: input
+            placeholder: "例：开箱测评、使用教程"
+          - key: targetAudience
+            label: 目标受众
+            type: input
+            placeholder: "例：18-25岁女性"
+
+      - name: 直播话术
+        riskLevel: medium
+        template: |
+          你是一位资深跨境广告文案专家，平台：{platName}。
+          任务：生成 TikTok 直播带货话术，口语化，有感染力，包含互动引导。
+          直播阶段：{liveStage}
+          原始文案：{originalCopy}
+        fields:
+          - key: originalCopy
+            label: 原始文案
+            type: textarea
+            rows: 4
+            placeholder: 输入现有直播话术或产品基础信息，留空则从零生成...
+            required: false
+          - key: liveStage
+            label: 直播阶段
+            type: input
+            placeholder: "例：开场预热、逼单冲量、福袋互动"
+
+      - name: 商品卡标题
+        riskLevel: high
+        template: |
+          你是一位资深跨境广告文案专家，平台：{platName}。
+          任务：生成 TikTok Shop 商品卡标题，突出卖点，含核心关键词，控制在60字符以内。
+          核心关键词：{keywords}
+          原始文案：{originalCopy}
+        fields:
+          - key: originalCopy
+            label: 原始文案
+            type: textarea
+            rows: 4
+            placeholder: 输入现有商品标题或产品基础信息，留空则从零生成...
+            required: false
+          - key: keywords
+            label: 核心关键词
+            type: input
+            placeholder: "例：显瘦、夏季、连衣裙"
+
+      - name: 商品描述
+        riskLevel: medium
+        template: |
+          你是一位资深跨境广告文案专家，平台：{platName}。
+          任务：生成 TikTok Shop 商品描述，简洁生动，突出使用价值。
+          核心卖点：{sellingPoints}
+          目标受众：{targetAudience}
+          原始文案：{originalCopy}
+        fields:
+          - key: originalCopy
+            label: 原始文案
+            type: textarea
+            rows: 4
+            placeholder: 输入现有商品描述或产品基础信息，留空则从零生成...
+            required: false
+          - key: sellingPoints
+            label: 核心卖点
+            type: input
+            placeholder: "例：面料亲肤、版型修身"
+          - key: targetAudience
+            label: 目标受众
+            type: input
+            placeholder: "例：职场女性"
+
+      - name: "Hashtag 文案"
+        riskLevel: low
+        template: |
+          你是一位资深跨境广告文案专家，平台：{platName}。
+          任务：生成适合 TikTok 的 Hashtag 组合，包含热门话题标签和垂直领域标签。
+          话题方向：{topic}
+          原始文案：{originalCopy}
+        fields:
+          - key: originalCopy
+            label: 原始文案
+            type: textarea
+            rows: 4
+            placeholder: 输入产品基础信息，留空则从零生成...
+            required: false
+          - key: topic
+            label: 话题方向
+            type: input
+            placeholder: "例：穿搭、健身、家居"
+
+      - name: 评论区互动
+        riskLevel: low
+        template: |
+          你是一位资深跨境广告文案专家，平台：{platName}。
+          任务：针对以下评论生成自然、有亲和力的互动回复，提升品牌好感度。
+          评论类型：{reviewType}
+          评论内容：{reviewContent}
+        fields:
+          - key: reviewContent
+            label: 评论内容
+            type: textarea
+            rows: 4
+            placeholder: 粘贴需要回复的评论...
+            required: true
+          - key: reviewType
+            label: 评论类型
+            type: radio
+            options:
+              - 好评
+              - 中评
+              - 差评
+
+      - name: "达人合作 Brief"
+        riskLevel: low
+        template: |
+          你是一位资深跨境广告文案专家，平台：{platName}。
+          任务：生成达人合作 Brief 文案，说明合作要求、内容方向和核心卖点。
+          达人类型：{creatorType}
+          目标受众：{targetAudience}
+          原始文案：{originalCopy}
+        fields:
+          - key: originalCopy
+            label: 原始文案
+            type: textarea
+            rows: 4
+            placeholder: 输入产品基础信息或现有 Brief，留空则从零生成...
+            required: false
+          - key: creatorType
+            label: 达人类型
+            type: input
+            placeholder: "例：生活类、测评类、穿搭类"
+          - key: targetAudience
+            label: 目标受众
+            type: input
+            placeholder: "例：Z世代、宝妈群体"
+
+      - name: "Shop 广告文案"
+        riskLevel: high
+        template: |
+          你是一位资深跨境广告文案专家，平台：{platName}。
+          任务：生成 TikTok Shop 广告投放文案，直接、有力，引导点击购买。
+          推广重点：{promoFocus}
+          原始文案：{originalCopy}
+        fields:
+          - key: originalCopy
+            label: 原始文案
+            type: textarea
+            rows: 4
+            placeholder: 输入现有广告文案或产品基础信息，留空则从零生成...
+            required: false
+          - key: promoFocus
+            label: 推广重点
+            type: input
+            placeholder: "例：爆款推荐、限时特惠"
+
+      - name: "促销 Banner"
+        riskLevel: high
+        template: |
+          你是一位资深跨境广告文案专家，平台：{platName}。
+          任务：生成促销 Banner 文案，简短有冲击力，突出优惠信息。
+          促销信息：{dealInfo}
+          原始文案：{originalCopy}
+        fields:
+          - key: originalCopy
+            label: 原始文案
+            type: textarea
+            rows: 4
+            placeholder: 输入现有 Banner 文案或产品基础信息，留空则从零生成...
+            required: false
+          - key: dealInfo
+            label: 促销信息
+            type: input
+            placeholder: "例：5折起，限时24小时"
+
+  - id: facebook
+    name: "Facebook / Instagram"
+    scenes:
+
+      - name: "Feed 广告主文案"
+        riskLevel: high
+        template: |
+          你是一位资深跨境广告文案专家，平台：{platName}。
+          任务：生成 Facebook/Instagram Feed 广告文案，先戳痛点再给解决方案，结尾引导行动。
+          用户痛点：{painPoint}
+          目标受众：{targetAudience}
+          原始文案：{originalCopy}
+        fields:
+          - key: originalCopy
+            label: 原始文案
+            type: textarea
+            rows: 4
+            placeholder: 输入现有广告文案或产品基础信息，留空则从零生成...
+            required: false
+          - key: painPoint
+            label: 用户痛点
+            type: input
+            placeholder: "例：睡眠不好、颈椎疼痛"
+          - key: targetAudience
+            label: 目标受众
+            type: input
+            placeholder: "例：30-45岁职场人群"
+
+      - name: "Stories 广告文案"
+        riskLevel: high
+        template: |
+          你是一位资深跨境广告文案专家，平台：{platName}。
+          任务：生成 Stories 广告文案，极简风格，3秒内传达核心信息，结尾配行动号召。
+          行动号召：{cta}
+          原始文案：{originalCopy}
+        fields:
+          - key: originalCopy
+            label: 原始文案
+            type: textarea
+            rows: 4
+            placeholder: 输入现有 Stories 文案或产品基础信息，留空则从零生成...
+            required: false
+          - key: cta
+            label: 行动号召
+            type: input
+            placeholder: "例：立即购买、限时免运费"
+
+      - name: "Reels 脚本"
+        riskLevel: medium
+        template: |
+          你是一位资深跨境广告文案专家，平台：{platName}。
+          任务：生成 Reels 短视频脚本，视觉感强，节奏紧凑，适合竖屏展示。
+          视频主题：{videoTheme}
+          目标受众：{targetAudience}
+          原始文案：{originalCopy}
+        fields:
+          - key: originalCopy
+            label: 原始文案
+            type: textarea
+            rows: 4
+            placeholder: 输入现有脚本或产品基础信息，留空则从零生成...
+            required: false
+          - key: videoTheme
+            label: 视频主题
+            type: input
+            placeholder: "例：产品对比、使用前后"
+          - key: targetAudience
+            label: 目标受众
+            type: input
+            placeholder: "例：健身人群"
+
+      - name: "Post 有机内容"
+        riskLevel: low
+        template: |
+          你是一位资深跨境广告文案专家，平台：{platName}。
+          任务：生成适合自然流量的 Post 内容，有话题性，鼓励互动评论。
+          内容主题：{contentTheme}
+          原始文案：{originalCopy}
+        fields:
+          - key: originalCopy
+            label: 原始文案
+            type: textarea
+            rows: 4
+            placeholder: 输入现有 Post 内容或产品基础信息，留空则从零生成...
+            required: false
+          - key: contentTheme
+            label: 内容主题
+            type: input
+            placeholder: "例：节日祝福、用户故事"
+
+      - name: "广告标题 Headline"
+        riskLevel: high
+        template: |
+          你是一位资深跨境广告文案专家，平台：{platName}。
+          任务：生成 Facebook 广告标题，简洁有力，突出核心价值主张，控制在40字符以内。
+          核心卖点：{sellingPoints}
+          原始文案：{originalCopy}
+        fields:
+          - key: originalCopy
+            label: 原始文案
+            type: textarea
+            rows: 4
+            placeholder: 输入现有广告标题或产品基础信息，留空则从零生成...
+            required: false
+          - key: sellingPoints
+            label: 核心卖点
+            type: input
+            placeholder: "例：免费试用30天"
+
+      - name: 落地页文案
+        riskLevel: high
+        template: |
+          你是一位资深跨境广告文案专家，平台：{platName}。
+          任务：生成落地页文案，结构清晰（标题→痛点→解决方案→CTA），转化导向。
+          行动号召：{cta}
+          目标受众：{targetAudience}
+          原始文案：{originalCopy}
+        fields:
+          - key: originalCopy
+            label: 原始文案
+            type: textarea
+            rows: 4
+            placeholder: 输入现有落地页文案或产品基础信息，留空则从零生成...
+            required: false
+          - key: cta
+            label: 行动号召
+            type: input
+            placeholder: "例：立即购买、免费试用"
+          - key: targetAudience
+            label: 目标受众
+            type: input
+            placeholder: "例：中小企业主"
+
+      - name: "DM 私信话术"
+        riskLevel: medium
+        template: |
+          你是一位资深跨境广告文案专家，平台：{platName}。
+          任务：生成 DM 私信话术，自然不生硬，根据私信目的设计沟通策略。
+          私信目的：{purpose}
+          原始文案：{originalCopy}
+        fields:
+          - key: originalCopy
+            label: 原始文案
+            type: textarea
+            rows: 4
+            placeholder: 输入现有私信话术或产品基础信息，留空则从零生成...
+            required: false
+          - key: purpose
+            label: 私信目的
+            type: input
+            placeholder: "例：新客转化、老客复购"
+
+      - name: 评论回复
+        riskLevel: low
+        template: |
+          你是一位资深跨境广告文案专家，平台：{platName}。
+          任务：针对以下评论生成专业友好的回复，维护品牌形象。
+          评论类型：{reviewType}
+          评论内容：{reviewContent}
+        fields:
+          - key: reviewContent
+            label: 评论内容
+            type: textarea
+            rows: 4
+            placeholder: 粘贴需要回复的评论...
+            required: true
+          - key: reviewType
+            label: 评论类型
+            type: radio
+            options:
+              - 好评
+              - 中评
+              - 差评
+
+      - name: 品牌故事
+        riskLevel: low
+        template: |
+          你是一位资深跨境广告文案专家，平台：{platName}。
+          任务：生成品牌故事文案，真实感人，传递品牌温度和差异化价值。
+          品牌理念：{brandConcept}
+          差异化优势：{advantage}
+          原始文案：{originalCopy}
+        fields:
+          - key: originalCopy
+            label: 原始文案
+            type: textarea
+            rows: 4
+            placeholder: 输入现有品牌故事或品牌基础信息，留空则从零生成...
+            required: false
+          - key: brandConcept
+            label: 品牌理念
+            type: input
+            placeholder: "例：让每个人都能负担得起好设计"
+          - key: advantage
+            label: 差异化优势
+            type: input
+            placeholder: "例：手工制作、本地原材料"
+
+      - name: 促销活动文案
+        riskLevel: high
+        template: |
+          你是一位资深跨境广告文案专家，平台：{platName}。
+          任务：生成促销活动文案，营造紧迫感，明确优惠利益点，引导立即行动。
+          促销信息：{dealInfo}
+          活动时限：{dealDeadline}
+          原始文案：{originalCopy}
+        fields:
+          - key: originalCopy
+            label: 原始文案
+            type: textarea
+            rows: 4
+            placeholder: 输入现有促销文案或产品基础信息，留空则从零生成...
+            required: false
+          - key: dealInfo
+            label: 促销信息
+            type: input
+            placeholder: "例：黑五全场7折"
+          - key: dealDeadline
+            label: 活动时限
+            type: input
+            placeholder: "例：11月29日截止"
+
+  - id: shopify
+    name: "Shopify 独立站"
+    scenes:
+
+      - name: 产品页标题
+        riskLevel: medium
+        template: |
+          你是一位资深跨境广告文案专家，平台：{platName}。
+          任务：生成 Shopify 产品页标题，SEO 友好，包含核心关键词，吸引点击。
+          产品品类：{category}
+          核心关键词：{keywords}
+          原始文案：{originalCopy}
+        fields:
+          - key: originalCopy
+            label: 原始文案
+            type: textarea
+            rows: 4
+            placeholder: 输入现有产品标题或产品基础信息，留空则从零生成...
+            required: false
+          - key: keywords
+            label: 核心关键词
+            type: input
+            placeholder: "例：handmade leather wallet"
+          - key: category
+            label: 产品品类
+            type: input
+            placeholder: "例：钱包、皮具"
+
+      - name: 产品描述
+        riskLevel: medium
+        template: |
+          你是一位资深跨境广告文案专家，平台：{platName}。
+          任务：生成 Shopify 产品描述页文案，场景化叙述，突出使用价值，引导加购。
+          目标受众：{targetAudience}
+          使用场景：{useScene}
+          原始文案：{originalCopy}
+        fields:
+          - key: originalCopy
+            label: 原始文案
+            type: textarea
+            rows: 4
+            placeholder: 输入现有产品描述或产品基础信息，留空则从零生成...
+            required: false
+          - key: targetAudience
+            label: 目标受众
+            type: input
+            placeholder: "例：商务男性、礼品采购"
+          - key: useScene
+            label: 使用场景
+            type: input
+            placeholder: "例：日常通勤、商务出行"
+
+      - name: "SEO Meta 描述"
+        riskLevel: medium
+        template: |
+          你是一位资深跨境广告文案专家，平台：{platName}。
+          任务：生成 SEO Meta 描述，包含核心关键词，控制在155字符以内，自然流畅。
+          核心关键词：{keywords}
+          原始文案：{originalCopy}
+        fields:
+          - key: originalCopy
+            label: 原始文案
+            type: textarea
+            rows: 4
+            placeholder: 输入现有 Meta 描述或产品基础信息，留空则从零生成...
+            required: false
+          - key: keywords
+            label: 核心关键词
+            type: input
+            placeholder: "例：handmade leather wallet men"
+
+      - name: "首页 Banner 文案"
+        riskLevel: medium
+        template: |
+          你是一位资深跨境广告文案专家，平台：{platName}。
+          任务：生成首页 Banner 文案，大标题+副标题+CTA 按钮文字，简洁有力。
+          品牌主张：{brandConcept}
+          行动号召：{cta}
+          原始文案：{originalCopy}
+        fields:
+          - key: originalCopy
+            label: 原始文案
+            type: textarea
+            rows: 4
+            placeholder: 输入现有 Banner 文案或品牌基础信息，留空则从零生成...
+            required: false
+          - key: brandConcept
+            label: 品牌主张
+            type: input
+            placeholder: "例：极简设计、匠心工艺"
+          - key: cta
+            label: 行动号召
+            type: input
+            placeholder: "例：立即探索、限时免运费"
+
+      - name: "Email 营销文案"
+        riskLevel: medium
+        template: |
+          你是一位资深跨境广告文案专家，平台：{platName}。
+          任务：生成 Email 营销文案，包含邮件主题行和正文，个性化开头，明确 CTA。
+          邮件类型：{emailType}
+          目标受众：{targetAudience}
+          原始文案：{originalCopy}
+        fields:
+          - key: originalCopy
+            label: 原始文案
+            type: textarea
+            rows: 4
+            placeholder: 输入现有邮件文案或产品基础信息，留空则从零生成...
+            required: false
+          - key: emailType
+            label: 邮件类型
+            type: input
+            placeholder: "例：弃购挽回、新品上架、节日促销"
+          - key: targetAudience
+            label: 目标受众
+            type: input
+            placeholder: "例：已购客户、订阅用户"
+
+      - name: 弃购挽回邮件
+        riskLevel: medium
+        template: |
+          你是一位资深跨境广告文案专家，平台：{platName}。
+          任务：生成弃购挽回邮件，唤起购买欲望，提供专属优惠，制造紧迫感。
+          挽回优惠：{dealInfo}
+          原始文案：{originalCopy}
+        fields:
+          - key: originalCopy
+            label: 原始文案
+            type: textarea
+            rows: 4
+            placeholder: 输入现有挽回邮件或产品基础信息，留空则从零生成...
+            required: false
+          - key: dealInfo
+            label: 挽回优惠
+            type: input
+            placeholder: "例：专属9折券，24小时有效"
+
+      - name: "Blog 文章"
+        riskLevel: low
+        template: |
+          你是一位资深跨境广告文案专家，平台：{platName}。
+          任务：生成 Blog 文章大纲及引言段落，SEO 友好，有实用价值，自然植入产品。
+          文章主题：{topic}
+          SEO 关键词：{keywords}
+          原始文案：{originalCopy}
+        fields:
+          - key: originalCopy
+            label: 原始文案
+            type: textarea
+            rows: 4
+            placeholder: 输入现有文章内容或产品基础信息，留空则从零生成...
+            required: false
+          - key: topic
+            label: 文章主题
+            type: input
+            placeholder: "例：皮具保养指南、送礼选品攻略"
+          - key: keywords
+            label: SEO 关键词
+            type: input
+            placeholder: "例：leather wallet care tips"
+
+      - name: "促销 Popup 文案"
+        riskLevel: high
+        template: |
+          你是一位资深跨境广告文案专家，平台：{platName}。
+          任务：生成促销弹窗文案，标题吸引注意，优惠信息清晰，CTA 按钮文字有力。
+          促销信息：{dealInfo}
+          行动号召：{cta}
+          原始文案：{originalCopy}
+        fields:
+          - key: originalCopy
+            label: 原始文案
+            type: textarea
+            rows: 4
+            placeholder: 输入现有 Popup 文案或产品基础信息，留空则从零生成...
+            required: false
+          - key: dealInfo
+            label: 促销信息
+            type: input
+            placeholder: "例：首单立减$5"
+          - key: cta
+            label: 行动号召
+            type: input
+            placeholder: "例：领取优惠"
+
+      - name: 客服话术
+        riskLevel: low
+        template: |
+          你是一位资深跨境广告文案专家，平台：{platName}。
+          任务：生成客服回复话术，专业友好，解答客户疑虑，维护购买信心。
+          客户问题：{question}
+        fields:
+          - key: question
+            label: 客户问题
+            type: textarea
+            rows: 3
+            placeholder: "例：物流多久到、支持退换货吗"
+            required: true
+
+      - name: "品牌 Slogan"
+        riskLevel: low
+        template: |
+          你是一位资深跨境广告文案专家，平台：{platName}。
+          任务：生成品牌 Slogan，朗朗上口，传递核心价值，易于记忆。
+          品牌理念：{brandConcept}
+          差异化优势：{advantage}
+          原始文案：{originalCopy}
+        fields:
+          - key: originalCopy
+            label: 原始文案
+            type: textarea
+            rows: 4
+            placeholder: 输入现有 Slogan 或品牌基础信息，留空则从零生成...
+            required: false
+          - key: brandConcept
+            label: 品牌理念
+            type: input
+            placeholder: "例：慢工出细活、每件都是限量"
+          - key: advantage
+            label: 差异化优势
+            type: input
+            placeholder: "例：全手工、终身保修"
