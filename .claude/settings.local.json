@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mvn spring-boot:run)",
+      "Bash(python3 *)",
+      "Bash(mvn package *)",
+      "Bash(mvn compile *)",
+      "Bash(dir \"C:\\\\Program Files\\\\Java\")",
+      "Bash(dir \"C:\\\\Program Files\\\\Eclipse Adoptium\")",
+      "Bash(dir \"C:\\\\Program Files\\\\Microsoft\")",
+      "Bash(where java *)",
+      "Bash(java -version)",
+      "Bash(mvn -version)",
+      "Bash(setx JAVA_HOME *)"
+    ]
+  }
+}

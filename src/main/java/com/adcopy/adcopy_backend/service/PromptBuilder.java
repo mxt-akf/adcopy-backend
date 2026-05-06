@@ -11,6 +11,18 @@ public class PromptBuilder {
 
   private static final Pattern PLACEHOLDER = Pattern.compile("\\{(\\w+)}");
 
+  private static final Map<String, Integer> CATEGORY_CHAR_LIMITS = Map.of(
+          "3C 电子", 200,
+          "美妆个护", 200,
+          "运动户外", 200,
+          "玩具游戏", 200,
+          "家居厨房", 250,
+          "服饰鞋帽", 256,
+          "工业科技", 500,
+          "母婴用品", 200,
+          "宠物用品", 200
+  );
+
   private final SceneConfigLoader sceneConfigLoader;
 
   public PromptBuilder(SceneConfigLoader sceneConfigLoader) {
